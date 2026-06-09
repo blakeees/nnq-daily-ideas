@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    width: 750px;
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+    padding: 40px 32px;
+    color: #1a1a1a;
+}
+
+/* ─── Header ─── */
+.header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.header h1 { font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+.header .date { font-size: 14px; color: #64748b; font-weight: 500; }
+.header .subtitle { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+
+/* ─── Section Title ─── */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 28px 0 14px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.section-badge {
+    font-size: 11px;
+    font-weight: 500;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+/* ─── Topics ─── */
+.topic-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+.topic-row:last-child { border-bottom: none; }
+.topic-rank {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+.topic-content { flex: 1; }
+.topic-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.45; margin-bottom: 4px; }
+.topic-meta { font-size: 11px; color: #94a3b8; margin-bottom: 4px; }
+.heat-bar { height: 4px; background: #f1f5f9; border-radius: 2px; overflow: hidden; }
+.heat-fill { height: 100%; border-radius: 2px; }
+
+/* ─── Stocks ─── */
+.stocks-grid { display: flex; gap: 20px; }
+.stocks-col { flex: 1; }
+.stocks-col-title { font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #e2e8f0; }
+.stock-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f8f8f8; }
+.stock-row:last-child { border-bottom: none; }
+.stock-name { font-size: 13px; font-weight: 500; color: #1e293b; }
+.stock-change { font-size: 12px; font-weight: 700; padding: 1px 7px; border-radius: 4px; }
+
+/* ─── News ─── */
+.news-row { padding: 7px 0; border-bottom: 1px solid #f8f8f8; font-size: 13px; color: #334155; line-height: 1.55; }
+.news-row:last-child { border-bottom: none; }
+.news-source { font-size: 11px; color: #94a3b8; font-style: italic; margin-left: 4px; }
+
+/* ─── Hot Posts ─── */
+.post-row { padding: 8px 12px; margin-bottom: 6px; background: #fafafa; border-radius: 8px; border-left: 3px solid #cbd5e1; }
+.post-title { font-size: 13px; font-weight: 600; color: #1a1a1a; line-height: 1.45; margin-bottom: 3px; }
+.post-rank { color: #dc2626; font-weight: 800; margin-right: 6px; font-variant-numeric: tabular-nums; }
+.post-meta { font-size: 11px; color: #94a3b8; }
+
+/* ─── Idea Cards ─── */
+.card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px 24px 18px;
+    margin-bottom: 16px;
+}
+.card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.num { font-size: 22px; font-weight: 800; color: #e2e8f0; }
+.urgency { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 4px; }
+.title { font-size: 16px; font-weight: 700; color: #0f172a; line-height: 1.55; margin-bottom: 10px; }
+.why { font-size: 13.5px; color: #475569; line-height: 1.65; margin-bottom: 10px; }
+.angle {
+    font-size: 13.5px; color: #1e40af; background: #eff6ff;
+    border-left: 3px solid #3b82f6; padding: 10px 14px;
+    border-radius: 8px; line-height: 1.65; margin-bottom: 12px;
+}
+.footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+.signals { display: flex; gap: 6px; flex-wrap: wrap; }
+.signal { font-size: 11px; font-weight: 500; color: #64748b; background: #f1f5f9; padding: 3px 8px; border-radius: 4px; }
+.reader { font-size: 12px; color: #94a3b8; }
+
+/* ─── Page Footer ─── */
+.page-footer {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.8;
+}
+</style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 創作者選題工作臺</h1>
+        <div class="date">2026年06月09日</div>
+        <div class="subtitle">站內熱點 × 選題靈感 · 富途牛牛社區實時數據</div>
+    </div>
+
+    <!-- 熱門帖文 -->
+    <div class="section-title">🔥 熱門帖文<span class="section-badge">高質量內容池 Top10</span></div>
+    
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">1</span>美股四大指數放量急跌兩週復盤</div>
+            <div class="post-meta">👤 穩中求勝Sam</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">2</span>韓股熔斷A股破4000我抄底海力士</div>
+            <div class="post-meta">👤 嘉哥愛自由</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">3</span>全球AI共振後全方位回調</div>
+            <div class="post-meta">👤 證悟君</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">4</span>牛友爆虧70萬逆襲盈利千萬</div>
+            <div class="post-meta">👤 牛友有料到</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">5</span>厲害的人一生只研究規律</div>
+            <div class="post-meta">👤 中戶變大戶小牛變大牛</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">6</span>美韓股雙殺多空力量已易勢</div>
+            <div class="post-meta">👤 熱廚房炒家</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">7</span>美股暴跌核心是非農超預期</div>
+            <div class="post-meta">👤 東風華爾街ai觀察</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">8</span>非農火熱科技股遭今年最大跌幅</div>
+            <div class="post-meta">👤 今天美股也賺錢了嗎</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">9</span>非農超預期澆滅年內降息預期</div>
+            <div class="post-meta">👤 楊楊得億</div>
+        </div>
+        <div class="post-row">
+            <div class="post-title"><span class="post-rank">10</span>券商也入場炒股炒幣邊界模糊</div>
+            <div class="post-meta">👤 記住見光死</div>
+        </div>
+
+    <!-- 熱門話題 -->
+    <div class="section-title">🔥 熱門話題<span class="section-badge">綜合熱度 Top5</span></div>
+    
+        <div class="topic-row">
+            <span class="topic-rank" style="background:#fee2e2;color:#dc2626;">1</span>
+            <div class="topic-content">
+                <div class="topic-title">特朗普稱兩三日敲定協議！中東局勢何時休？</div>
+                <div class="topic-meta">👀 2893.9w · 💬 2549</div>
+                <div class="heat-bar"><div class="heat-fill" style="width:100%;background:linear-gradient(90deg, #ef4444 0%, #f97316 100%);"></div></div>
+            </div>
+        </div>
+        <div class="topic-row">
+            <span class="topic-rank" style="background:#fee2e2;color:#dc2626;">2</span>
+            <div class="topic-content">
+                <div class="topic-title">光通訊成算力瓶頸！光纖迎價值重估？</div>
+                <div class="topic-meta">👀 1838.4w · 💬 1363</div>
+                <div class="heat-bar"><div class="heat-fill" style="width:63%;background:linear-gradient(90deg, #ef4444 0%, #f97316 100%);"></div></div>
+            </div>
+        </div>
+        <div class="topic-row">
+            <span class="topic-rank" style="background:#fee2e2;color:#dc2626;">3</span>
+            <div class="topic-content">
+                <div class="topic-title">沃什新政醞釀中！投資者如何應對？</div>
+                <div class="topic-meta">👀 1373.0w · 💬 464</div>
+                <div class="heat-bar"><div class="heat-fill" style="width:46%;background:linear-gradient(90deg, #ef4444 0%, #f97316 100%);"></div></div>
+            </div>
+        </div>
+        <div class="topic-row">
+            <span class="topic-rank" style="background:#fef3c7;color:#d97706;">4</span>
+            <div class="topic-content">
+                <div class="topic-title">港股回調，下半年怎麼走？</div>
+                <div class="topic-meta">👀 1036.5w · 💬 1379</div>
+                <div class="heat-bar"><div class="heat-fill" style="width:36%;background:linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);"></div></div>
+            </div>
+        </div>
+        <div class="topic-row">
+            <span class="topic-rank" style="background:#fef3c7;color:#d97706;">5</span>
+            <div class="topic-content">
+                <div class="topic-title">通脹意外升溫！美國1月PPI超預期加速</div>
+                <div class="topic-meta">👀 675.4w · 💬 666</div>
+                <div class="heat-bar"><div class="heat-fill" style="width:23%;background:linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);"></div></div>
+            </div>
+        </div>
+
+    <!-- 股票熱度 -->
+    <div class="section-title">📈 股票新聞熱度</div>
+    <div class="stocks-grid">
+        <div class="stocks-col">
+            <div class="stocks-col-title">🇺🇸 美股 Top10</div>
+            <div class="stock-row"><span class="stock-name">美光科技</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+9.87%</span></div><div class="stock-row"><span class="stock-name">英特爾</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+11.19%</span></div><div class="stock-row"><span class="stock-name">蘋果</span><span class="stock-change" style="color:#16a34a;background:#f0fdf4;">-1.89%</span></div><div class="stock-row"><span class="stock-name">邁威爾科技</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+9.63%</span></div><div class="stock-row"><span class="stock-name">特斯拉</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+4.59%</span></div><div class="stock-row"><span class="stock-name">英偉達</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+1.73%</span></div><div class="stock-row"><span class="stock-name">Cerebras Systems</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+18.32%</span></div><div class="stock-row"><span class="stock-name">閃迪</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+5.30%</span></div><div class="stock-row"><span class="stock-name">博通</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+2.82%</span></div><div class="stock-row"><span class="stock-name">納指100ETF-Invesco QQQ Trust</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+1.56%</span></div>
+        </div>
+        <div class="stocks-col">
+            <div class="stocks-col-title">🇭🇰 港股 Top10</div>
+            <div class="stock-row"><span class="stock-name">阿里巴巴-W</span><span class="stock-change" style="color:#16a34a;background:#f0fdf4;">-1.43%</span></div><div class="stock-row"><span class="stock-name">騰訊控股</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+1.52%</span></div><div class="stock-row"><span class="stock-name">南方兩倍做多海力士</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+15.37%</span></div><div class="stock-row"><span class="stock-name">中芯國際</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+3.38%</span></div><div class="stock-row"><span class="stock-name">小米集團-W</span><span class="stock-change" style="color:#16a34a;background:#f0fdf4;">-0.66%</span></div><div class="stock-row"><span class="stock-name">智譜</span><span class="stock-change" style="color:#16a34a;background:#f0fdf4;">-13.55%</span></div><div class="stock-row"><span class="stock-name">建滔積層板</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+12.60%</span></div><div class="stock-row"><span class="stock-name">MINIMAX-W</span><span class="stock-change" style="color:#16a34a;background:#f0fdf4;">-8.58%</span></div><div class="stock-row"><span class="stock-name">勝宏科技</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+12.53%</span></div><div class="stock-row"><span class="stock-name">美團-W</span><span class="stock-change" style="color:#dc2626;background:#fef2f2;">+1.25%</span></div>
+        </div>
+    </div>
+
+    <!-- 熱門新聞 -->
+    <div class="section-title">📰 實時熱門新聞<span class="section-badge">Top15</span></div>
+    <div class="news-row">一兩天內見分曉！特朗普重申“極好協議”進入最後階段<span class="news-source">— 金十數據</span></div><div class="news-row">Palantir遭英國重拳審查！被批爲“不可接受風險點”，與NHS 4.4億美元合同或被解約<span class="news-source">— 智通財經</span></div><div class="news-row">港交所：將指定股票指數期貨收市後交易（T+1）時段漲跌幅限制擴大至±6%<span class="news-source">— 快訊</span></div><div class="news-row">日本央行QT踩剎車？傳下一財年或暫停縮減購債規模 但內部仍有分歧<span class="news-source">— 智通財經</span></div><div class="news-row">北水減倉港股超86億港元，淨買入建滔集團超18億港元，淨賣出盈富基金超114億港元<span class="news-source">— 富途資訊</span></div><div class="news-row">比亞迪千人股東會，約一半是車主！董事長王傳福：一季度波動期已過，後面會越來越好<span class="news-source">— 證券時報</span></div><div class="news-row">Rocket Lab CEO：只有兩家公司成功實現“規模化太空發射”，一家是SpaceX<span class="news-source">— 華爾街見聞</span></div><div class="news-row">高盛：雲端與數據中心子行業仍爲下半年最看好領域，薦阿里、萬國數據、世紀互聯、金山雲AASTOCKS</div><div class="news-row">市場“自己嚇自己”？經濟K型分化嚴峻，美聯儲憑什麼加息？<span class="news-source">— 華爾街見聞</span></div><div class="news-row">港市速睇 | 三大指數漲跌不一，恒指跌0.37%，北水淨流出超86億港元；半導體股走強，天數智芯漲超11%；石油股走低，中國石油跌超4%<span class="news-source">— 富途資訊</span></div><div class="news-row">三星、英偉達擴大合作，談判已延伸至HBM5及下一代Groq芯片<span class="news-source">— 華爾街見聞</span></div><div class="news-row">通脹衝向4%，債市逼沃什亮劍：敢不敢對特朗普說“不”？<span class="news-source">— 華爾街見聞</span></div><div class="news-row">特朗普擬推動政府持股AI企業，本週或開啓關鍵談判<span class="news-source">— 金十數據</span></div><div class="news-row">天嶽先進漲幅擴大，碳化硅襯底片大廠產能利用率已超90%<span class="news-source">— 智通財經</span></div><div class="news-row">金山軟件股價走高，小米集團公開增持金山軟件，持股比例增至5.39%<span class="news-source">— 智通財經</span></div>
+
+    <!-- AI 選題靈感 -->
+    <div class="section-title">💡 AI 選題靈感<span class="section-badge">10 條</span></div>
+    
+        <div class="card">
+            <div class="card-head">
+                <span class="num">01</span>
+                <span class="urgency" style="background:#fee2e2;color:#dc2626;">⚡ 高時效</span>
+            </div>
+            <div class="title">建滔集團一天暴漲25%、電子布年內五輪提價累漲100%：散戶錯過了PCB這波，下一個被'斷供'引爆的環節藏在哪裏？</div>
+            <div class="why">光通訊話題瀏覽1838萬、PCB板塊今天集體創歷史新高（建滔積層板+12.6%、勝宏科技+12.53%、長飛光纖+9.05%），但社區討論幾乎全在追'誰漲了'，對'爲什麼漲——全球70%PPE樹脂斷供'這條供應鏈邏輯鏈沒人系統拆。讀者點進來想知道的是'下一個還能買什麼'，而不是復盤已漲的。</div>
+            <div class="angle">🎯 用一張供應鏈流向圖拆解AI算力→PCB→覆銅板→電子布→樹脂的層層卡脖子關係，標註每一環的提價幅度和產能利用率（碳化硅襯底>90%、電子布5輪提價）。重點回答：哪些環節還沒充分漲、哪些是'第二落點'。結尾給一個'斷供傳導時間表'判斷後續催化窗口。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">PCB概念股集體飆升+電子布累漲100%+全球70%PPE樹脂斷供新聞</span><span class="signal">光通訊話題瀏覽1838萬評論1363</span></div>
+                <div class="reader">👤 看到PCB暴漲但沒上車、想找'下一個建滔'的散戶</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">02</span>
+                <span class="urgency" style="background:#fee2e2;color:#dc2626;">⚡ 高時效</span>
+            </div>
+            <div class="title">黃仁勳親口說'回調'、評論區卻在吵'回調就是買點'：CPI公佈前24小時，半導體多頭和空頭各押了什麼倉位？</div>
+            <div class="why">'黃仁勳造市'帖評論區出現明顯認知分裂——'黃爸都承認回調了'vs'千金難買回頭牛'，還有人擔心'明天CPI怕再砸'。同時'超級周CPI'話題16篇高質量內容、點擊1.8萬但收藏率僅0.5%，說明讀者最焦慮的'CPI對半導體到底意味着什麼'沒被寫透。這是今天不寫明天就過期的窗口。</div>
+            <div class="angle">🎯 不預測漲跌，而是做'兩種劇本推演'：CPI超預期（>4%敘事）下半導體的回撤路徑 vs CPI降溫下的降息預期演繹路徑，各自列出該買/該躲的細分標的。把評論區'上20%下80%''能打六七折再說'這些真實分歧整理成多空對照表，讓讀者自己定位。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">黃仁勳帖評論分裂'回調'vs'買點'+'明天cpi怕再砸'</span><span class="signal">超級周CPI話題16篇點擊18924但收藏率0.5%缺口</span></div>
+                <div class="reader">👤 CPI公佈前夜不知道該加倉還是減倉的半導體持倉者</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">03</span>
+                <span class="urgency" style="background:#fee2e2;color:#dc2626;">⚡ 高時效</span>
+            </div>
+            <div class="title">SpaceX上市倒計時，但評論區在喊'解禁就暴跌''上市要小心'：太空板塊的'抽不到、買不起'散戶該怎麼蹭這波？</div>
+            <div class="why">SpaceX相關話題熱度極高（'6月投什麼'152萬、'太空股催化'558萬），但評論暴露真實痛點——'動不動幾百幾千手才抽到''spacex解禁就暴跌''破430先有機會'。讀者關心的不是SpaceX本身，而是'我抽不到怎麼辦、周邊怎麼佈局'，這個角度還有很大展開空間。</div>
+            <div class="angle">🎯 做'SpaceX外圍受益鏈'清單：Rocket Lab（CEO稱只有兩家實現規模化發射）、MSCI快速納入邏輯、太空數據中心方案對應的算力/電力概念。重點拆解'上市後解禁時間表+歷史新股解禁回撤規律'，給散戶一個'不抽新股也能參與'的現實路徑，回應評論區'抽不到''要小心'的焦慮。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">SpaceX話題558萬瀏覽+MSCI快速納入新聞+Rocket Lab CEO表態</span><span class="signal">評論'抽不到幾百手''解禁就暴跌''破430先有機會'</span></div>
+                <div class="reader">👤 想參與太空概念但抽不到SpaceX新股的散戶</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">04</span>
+                <span class="urgency" style="background:#fee2e2;color:#dc2626;">⚡ 高時效</span>
+            </div>
+            <div class="title">Palantir被英國NHS審查、特朗普卻要'政府持股AI企業'：當政府同時成爲AI最大買家和股東，這對持倉者是利好還是雷？</div>
+            <div class="why">今天兩條新聞形成強烈反差——Palantir 4.4億美元政府合同或被解約（'不可接受風險點'），而特朗普本週要推動政府持股AI企業。社區對'政府與AI的關係'幾乎沒有從'雙刃劍'角度切入的內容，這是一個獨特的跨事件聯動視角。</div>
+            <div class="angle">🎯 用'政府介入AI的兩面性'結構：一面是合同/補貼/持股帶來的確定性收入（哪些公司受益），另一面是監管審查/政治風險（Palantir案例就是警示）。列出對政府收入依賴度高的AI標的清單，標註'政府越深入越雙刃'的風險敞口，幫讀者重新評估持倉的政策風險。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">Palantir被英國審查或解約4.4億合同新聞</span><span class="signal">特朗普擬推動政府持股AI企業本週談判新聞</span></div>
+                <div class="reader">👤 持有Palantir等政府訂單型AI股、關心政策風險的投資者</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">05</span>
+                <span class="urgency" style="background:#fee2e2;color:#dc2626;">⚡ 高時效</span>
+            </div>
+            <div class="title">韓股熔斷後暴力反彈16%、'你抄到底了嗎'話題收藏率卻是0%：復盤這波過山車，散戶到底學到了什麼可複用的東西？</div>
+            <div class="why">韓股話題點擊5473但收藏率0.0%——是缺口裏最極端的，說明讀者瘋狂點進來看卻完全不願收藏，現有內容只在喊'反彈了'沒給方法論。疊加3倍做多韓國ETF+16.30%、南方兩倍做多海力士+15.37%等槓桿產品被熱炒，散戶用槓桿抄底的風險沒人講。</div>
+            <div class="angle">🎯 做'韓股熔斷-反彈復盤+槓桿ETF避坑'：用時間線還原'連跌三天→熔斷→暴漲8%'的全過程，重點拆解2倍/3倍槓桿ETF在這種劇烈波動中的'損耗陷阱'（用具體數字算給散戶看）。回應評論區'過兩禮拜就後悔沒多入''年底500再買'的兩派，給一個'波動市裏槓桿該怎麼用'的實操框架。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">韓股話題點擊5473收藏率0.0%極端缺口</span><span class="signal">3倍做多韓國ETF+16.3%、南方兩倍做多海力士+15.37%槓桿產品熱炒</span></div>
+                <div class="reader">👤 想抄底韓股/AI又怕被槓桿ETF損耗坑的散戶</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">06</span>
+                <span class="urgency" style="background:#fef3c7;color:#d97706;">🕐 中時效</span>
+            </div>
+            <div class="title">美光漲兩倍、'存爲王'8篇內容卻沒人收藏：內存到底漲到哪一步了？從HBM到DDR的'漲價接力'還能跑多久？</div>
+            <div class="why">MU是後臺個股池點擊第一（23篇/3.4萬點擊），'存爲王'話題8篇但收藏率僅0.8%——典型的'人人在寫但沒寫透'。疊加三星英偉達擴HBM5合作、Cerebras+18%等新聞，內存敘事正在升級但社區內容停在'美光好'層面。</div>
+            <div class="angle">🎯 做'內存漲價接力賽'拆解：HBM（英偉達+三星談到HBM5）→ 普通DRAM → NAND（閃迪+5.3%）的漲價先後順序和當前所處階段，用產能/庫存數據判斷'接力棒'傳到哪了。重點回答評論區'美光漲兩倍貢獻核心利潤'背後——這是週期頂還是中段？給一個'內存週期階段定位圖'。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">MU後臺23篇點擊34074居首+'存爲王'8篇收藏率0.8%缺口</span><span class="signal">三星英偉達擴大HBM5合作新聞+閃迪+5.3%</span></div>
+                <div class="reader">👤 持有或想買美光/海力士、不確定內存週期位置的投資者</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">07</span>
+                <span class="urgency" style="background:#fef3c7;color:#d97706;">🕐 中時效</span>
+            </div>
+            <div class="title">北水淨賣盈富基金114億、卻狂買建滔18億：聰明錢'拋指數、買個股'的調倉背後藏着什麼信號？</div>
+            <div class="why">今天北水數據極有故事性——淨流出86億但結構是'賣寬基ETF(盈富-114億)、買單一個股(建滔+18億)'。'港股下半年怎麼走'話題1036萬瀏覽、1379評論，但幾乎沒人從'北水資金結構'這個微觀角度解讀方向，多數停在指數點位猜測。</div>
+            <div class="angle">🎯 拆解'北水拋指數買個股'的含義：這通常意味着資金從'被動看多大盤'轉向'主動押注結構性機會'。結合建滔（PCB漲價）、金山軟件（小米增持5.39%）等今天被買的個股，提煉北水當前偏好的'確定性主線'。給讀者一個'跟着北水調倉結構而非點位'的觀察方法。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">北水減倉86億但淨賣盈富114億、淨買建滔18億結構數據</span><span class="signal">港股下半年話題1036萬瀏覽1379評論但無資金結構角度</span></div>
+                <div class="reader">👤 糾結港股大盤方向、想從資金流找主線的港股投資者</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">08</span>
+                <span class="urgency" style="background:#fef3c7;color:#d97706;">🕐 中時效</span>
+            </div>
+            <div class="title">金山軟件被小米增持、中興靠字節'豆包'催化：騰訊AI開發者生態剛開閘，誰會是'被巨頭點名'的下一批受益股？</div>
+            <div class="why">今天出現一組'巨頭綁定中小公司'的連環信號——小米增持金山軟件(+9.56%)、字節豆包催化中興(大摩點評)、騰訊發AI生態接入指引(+3%)。社區在追單隻票，但'巨頭AI生態卡位'這條主線沒人串起來，錯過了一個跨公司的結構性視角。</div>
+            <div class="angle">🎯 做'巨頭AI生態綁定地圖'：梳理騰訊/字節/小米/阿里各自的AI生態正在拉攏哪些供應商或被投公司，標註已被'官方蓋章'的（金山、中興）和市場預期中的候選。用'被巨頭綁定=確定性訂單+估值重估'邏輯，給讀者一個跟蹤框架，而非單票推薦。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">小米增持金山軟件至5.39%+中興字節豆包合作大摩催化+騰訊AI生態指引三連信號</span><span class="signal">金山軟件+9.56%、中興上揚個股表現</span></div>
+                <div class="reader">👤 想佈局國產AI應用鏈、找'巨頭背書'確定性的投資者</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">09</span>
+                <span class="urgency" style="background:#dcfce7;color:#16a34a;">🌿 長青</span>
+            </div>
+            <div class="title">比亞迪王傳福說'一季度波動已過'、約一半股東是車主：當用戶即股東，這種公司的股價該怎麼看待'信仰盤'?</div>
+            <div class="why">比亞迪股東會'約一半是車主'是個極獨特的細節，幾乎沒人從'用戶型股東結構如何影響股價韌性'這個行爲金融角度切入。疊加王傳福'後面越來越好'的預期管理，這是一個跳出常規財報分析的多元視角選題。</div>
+            <div class="angle">🎯 從'股東即用戶'切入比亞迪的'信仰盤'特徵：分析這類股東結構的優點（拋壓低、長期持有）與風險（情緒化、對負面消息容忍度）。對比特斯拉同樣的'粉絲股東'現象，給讀者一個'如何區分信仰盤是護城河還是泡沫'的判斷維度。結尾落到'波動期已過'這句話該信幾分。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">比亞迪千人股東會約一半是車主+王傳福'一季度波動已過'新聞</span><span class="signal">比亞迪股份+0.40%港股熱度榜在列</span></div>
+                <div class="reader">👤 持有或觀望比亞迪、想理解'粉絲股東'對股價影響的投資者</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <span class="num">10</span>
+                <span class="urgency" style="background:#dcfce7;color:#16a34a;">🌿 長青</span>
+            </div>
+            <div class="title">通脹衝4%、債市'逼沃什亮劍'、美聯儲卻被問'憑什麼加息'：K型分化下，普通人到底信哪個版本的美國經濟？</div>
+            <div class="why">今天有三條互相矛盾的宏觀信號——PPI超預期(通脹升溫)、'沃什新政'話題1373萬瀏覽、'美聯儲憑什麼加息'(經濟K型分化)。'超級周CPI'相關內容點擊高但收藏率0.5%，說明讀者被宏觀噪音淹沒卻找不到一個'幫我理清楚'的框架。這是一個幫讀者降噪的機會。</div>
+            <div class="angle">🎯 做'三個矛盾信號的降噪指南'：把'通脹衝4%要加息'vs'K型分化經濟很弱'vs'沃什可能轉鴿'三種敘事並列，分別說明各自的數據依據和受益資產。核心是教讀者'同一組數據爲什麼能解讀出相反結論'，並給一個'看哪幾個指標能判斷哪個敘事佔上風'的checklist。</div>
+            <div class="footer">
+                <div class="signals"><span class="signal">通脹衝4%+'美聯儲憑什麼加息'K型分化+沃什話題1373萬三條矛盾宏觀信號</span><span class="signal">超級周CPI話題收藏率0.5%讀者被噪音淹沒缺口</span></div>
+                <div class="reader">👤 被宏觀新聞搞暈、想要一個清晰判斷框架的普通投資者</div>
+            </div>
+        </div>
+
+    <div class="page-footer">
+        數據來源：富途牛牛社區熱門話題、新聞、股票熱度、熱帖
+    </div>
+</body>
+</html>
